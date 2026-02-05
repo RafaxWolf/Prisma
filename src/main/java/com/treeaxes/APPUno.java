@@ -6,9 +6,8 @@ import com.treeaxes.CLI.RegisterMenu;
 import com.treeaxes.Config.AppConfig;
 import com.treeaxes.Config.ConfigLoader;
 import com.treeaxes.Controller.UserController;
-import com.treeaxes.Debug.DMsg;
+import com.treeaxes.Debug.LogWriter;
 
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class APPUno {
@@ -17,17 +16,18 @@ public class APPUno {
         UserController userController = new UserController();
         Scanner sc = new Scanner(System.in);
 
+        // Cargar la Configuracion
         AppConfig.initEnv();
 
         boolean loop = true;
         while(loop) {
             // Menu
-            System.out.println("\n---Bienvenido a "+Brand.NOM_APP+"---\n" +
+            System.out.println("\n--- Bienvenido a "+Brand.NOM_APP+" ---\n" +
                     "1. Iniciar Sesión\n" +
                     "2. Registrarse\n" +
                     "3. Salir");
 
-            System.out.print("Ingresa una opción: ");
+            System.out.print("\nIngresa una opción: ");
             int opcion = sc.nextInt();
             sc.nextLine();
 
@@ -37,7 +37,7 @@ public class APPUno {
 
                     try{
                         String user = loginMenu.inicioSesion();
-                        System.out.println(user);
+                        LogWriter.create(user);
                         if (user != null){
                             MainMenu mainMenu = new MainMenu(user);
                             mainMenu.feed();
@@ -45,7 +45,7 @@ public class APPUno {
                         }
 
                     } catch (Exception e) {
-                        System.out.println("Error al iniciar Sesion");
+                        System.out.println("[!] Error al iniciar Sesion");
                     }
 
                     break;
@@ -54,11 +54,11 @@ public class APPUno {
 
                     try{
                         if (registerMenu.registroMenu()) {
-                            System.out.println("[+] Usuario Registrado con exito.");
+                            System.out.println("[+] Usuario Registrado con exito.\n");
                             break;
                         }
                     } catch (Exception e) {
-                        System.out.println("Error al registrar Usuario");
+                        System.out.println("[!] Error al registrar Usuario");
                     }
                     break;
 

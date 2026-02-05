@@ -32,10 +32,10 @@ public class UserController {
         }
         catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("usuario ya esta registrado");
-            LogWriter.create("[*] usuario ya esta registrado");
+            //LogWriter.create("[*] usuario ya esta registrado");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            LogWriter.create(ex.getMessage());
+            //LogWriter.create(ex.getMessage());
         }
 
 
@@ -60,7 +60,7 @@ public class UserController {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
             LogWriter.create(e.getMessage());
             return false;
         }
@@ -99,7 +99,6 @@ public class UserController {
                 while (rs.next()){
 
                     //Datos
-
                     int id_user = rs.getInt("id_user");
                     String usernames = rs.getString("username");
                     String email = rs.getString("email");
@@ -137,7 +136,6 @@ public class UserController {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-
         }
 
     }
