@@ -2,9 +2,9 @@ package com.treeaxes.Debug;
 
 import com.treeaxes.Config.ConfigLoader;
 
-public class DMsg {
+import static com.treeaxes.APPUno.cfg;
 
-    private static final ConfigLoader cfg =  new ConfigLoader();
+public class DMsg {
 
     public DMsg() {}
 

@@ -16,7 +16,7 @@ public class AppConfig {
     public static final String RUTA_WALLET = RUTA_BASE + File.separator + "Wallet";
 
 
-    // El config por defecto que genera el programa la primera vez que lo abres.
+    /// Contenido de "config.properties" que el programa crea al iniciarse por primera vez.
     public static final String CONFIG_CONTENT =
             "# Configuración de " + Brand.NOM_APP + " - " + Brand.NOM_EMPRESA +"\n" +
                     "app.debug=false\n" +
@@ -25,33 +25,45 @@ public class AppConfig {
                     "db.pass=\"\"\n";
 
 
-    // Devuelve la ruta base del sistema operativo que se esta usando
-    // en el caso de windows sera /Users/user/
+    /// Devuelve la ruta base del sistema operativo que se esta usando
     public static String determinarRutaBaseOS(){
         String userHome = System.getProperty("user.home");
         String developers = Brand.NOM_EMPRESA;
         String appName = Brand.NOM_APP;
 
-        // Si el sistema operativo es Windows
+        /*
+        * Si el sistema operativo es Windows la ruta sera:
+        * C:/Users/<user>/AppData/Local/...
+        * */
         if (OS.contains("win")) {
             return userHome + File.separator + "AppData"
                     + File.separator + "Local"
                     + File.separator + developers
                     + File.separator + appName;
 
-        // Si el sistema operativo es MacOS
+
+        /*
+        * Si el sistema operativo es MacOS la ruta sera:
+        * /Users/<user>/Library/Application Support/...
+        * */
         } else if (OS.contains("mac")) {
             return userHome + File.separator + "Library"
                     + File.separator + "Application Support"
                     + File.separator + appName;
+
+
+        /*
+        * Si el sistema operativo es Linux u otro la ruta sera:
+        * /home/<user>/.<developers>/<appName>
+        * */
         } else {
-            return userHome + File.separator + ".config"
-                    + File.separator + appName;
+            return userHome + File.separator + "." +
+                    developers + File.separator + appName;
         }
     }
 
 
-    // Inicializa el entorno de trabajo creando las carpetas y archivos necesarios
+    /// Inicializa el entorno de trabajo creando las carpetas y archivos necesarios
     public static void initEnv(){
 
         LogWriter.create("[*] Verificando entorno de trabajo en: " + RUTA_BASE);
@@ -62,11 +74,11 @@ public class AppConfig {
         makeDirectory(RUTA_LOGS); //Crea la carpeta de logs
 
         crearArchivoConfig(RUTA_BASE); //Crea el archivo config.properties
-        System.out.println("[+] Por favor ingrese sus datos de configuracion aqui: " + RUTA_PROPERTIES);
     }
 
 
-    //Crea el archivo "config.properties" en la ruta /Users/<user>/AppData/Local/...
+    /// Crea el archivo "config.properties" en la ruta especificada
+    /// @param ruta_base Ruta donde crear el archivo.
     private static void crearArchivoConfig(String ruta_base){
         File file = new File(ruta_base,"config.properties");
 
@@ -74,20 +86,21 @@ public class AppConfig {
 
             try (FileWriter fw = new FileWriter(file)) {
                 fw.write(CONFIG_CONTENT);
+                System.out.println("[+] Archivo de Configuracion creado.");
+                System.out.println("[*]Por favor ingrese sus datos de configuracion aqui: " + RUTA_PROPERTIES);
 
             } catch (IOException e){
                 System.out.println("[!] Error al escribir config.properties \n" + e.getMessage());
                 System.exit(1);
             }
 
-        } else {
-            LogWriter.create("[*] Archivo config.properties ya existe!");
         }
 
     }
 
 
-    // Crea un directorio en la ruta que se le diga. Si ya existe ues entonces no crea nada.
+    /// Crea un directorio en la ruta que se le diga. Si ya existe ues entonces no crea nada.
+    /// @param ruta Ruta de la carpeta a crear.
     private static void makeDirectory(String ruta){
         File directorio = new File(ruta);
 
@@ -104,5 +117,6 @@ public class AppConfig {
             LogWriter.create("[*] Directorio encontrado: " + ruta);
         }
     }
+
 
 }
