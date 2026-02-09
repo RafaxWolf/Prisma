@@ -4,6 +4,7 @@ import com.treeaxes.Debug.LogWriter;
 import com.treeaxes.Model.User;
 import com.treeaxes.Model.UserData;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 
 public class UserController {
@@ -140,6 +141,42 @@ public class UserController {
 
         }
 
+    }
+
+    public static int getIdUser(String username){
+        String sql = "SELECT * FROM USERS WHERE username = ?";
+
+        try(Connection conn = ConnDB.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+
+            ps.setString(1,username);
+
+            try(ResultSet rs = ps.executeQuery()){
+                return rs.next()?rs.getInt("id_user"):0;
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+    return 0;
+    }
+
+    public static String getUsername(int id_user){
+        String sql = "SELECT * FROM USERS WHERE id_user = ?";
+
+        try(Connection conn = ConnDB.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+
+            ps.setInt(1,id_user);
+
+            try(ResultSet rs = ps.executeQuery()){
+                return rs.next()?rs.getString("username"):"";
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return "";
     }
 
     // debug

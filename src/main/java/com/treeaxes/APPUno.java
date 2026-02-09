@@ -7,17 +7,20 @@ import com.treeaxes.Config.AppConfig;
 import com.treeaxes.Config.ConfigLoader;
 import com.treeaxes.Controller.UserController;
 import com.treeaxes.Debug.DMsg;
-
 import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class APPUno {
 
     public static void main(String[] args) {
+
+
+
         UserController userController = new UserController();
         Scanner sc = new Scanner(System.in);
 
         AppConfig.initEnv();
+
 
         boolean loop = true;
         while(loop) {
