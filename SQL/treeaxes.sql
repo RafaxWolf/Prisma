@@ -29,22 +29,22 @@ CREATE TABLE ROLE(
 );
 
 CREATE TABLE publicacion(
-    id_publicacion NUMBER(5) GENERATED ALWAYS AS IDENTITY
+                            id_publicacion NUMBER(5) GENERATED ALWAYS AS IDENTITY
     INCREMENT BY 1 NOT NULL,
-    id_user NUMBER(8) NOT NULL,
-    content_pub VARCHAR2(255),
-    fecha_pub DATE DEFAULT SYSDATE NOT NULL,
-    CONSTRAINT PK_PUBLICACION PRIMARY KEY (id_publicacion)
+                            id_user NUMBER(8) NOT NULL,
+                            content_pub VARCHAR2(255),
+                            fecha_pub DATE DEFAULT SYSDATE NOT NULL,
+                            CONSTRAINT PK_PUBLICACION PRIMARY KEY (id_publicacion)
 );
 
 CREATE TABLE mensaje(
-    id_mensaje NUMBER(10) GENERATED ALWAYS AS IDENTITY
+                        id_mensaje NUMBER(10) GENERATED ALWAYS AS IDENTITY
     INCREMENT BY 1 NOT NULL,
-    id_user_sender NUMBER(8) NOT NULL,
-    id_user_receiver NUMBER(8) NOT NULL,
-    fecha_mensaje DATE DEFAULT SYSDATE NOT NULL,
-    content_msg VARCHAR2(255),
-    CONSTRAINT PK_MENSAJE PRIMARY KEY (id_mensaje)
+                        id_user_sender NUMBER(8) NOT NULL,
+                        id_user_receiver NUMBER(8) NOT NULL,
+                        fecha_mensaje DATE DEFAULT SYSDATE NOT NULL,
+                        content_msg VARCHAR2(255),
+                        CONSTRAINT PK_MENSAJE PRIMARY KEY (id_mensaje)
 
 );
 
@@ -105,7 +105,19 @@ INSERT INTO ROLE (NOMBRE_ROLE,PERMISOS) VALUES ('VacBanned','000000');
 -- Default Users
 INSERT INTO USERS(username,email,pwd,id_role) VALUES ('test','test@test.com','1234',3);
 INSERT INTO USERS(username,email,pwd,id_role) VALUES ('panxitovilla','panixo@gmail.com','12390',4);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('rafita','rafito@gmail.com','12390',4);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('maxiporro','simba@outlook.com','1234',4);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('rafaxgolfo','wolf@yahoo.es','asd123',4);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('seebaputaku','akomitz@nolapone.cl','asd345',4);
 
+
+-- Mensajes de prueba
+
+INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (3,2,'hola');
+INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (4,2,'adios');
+INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (5,2,'sapo culia');
+INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (3,2,'soy rafito');
+INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (3,2,'chao me voy');
 
 INSERT INTO publicacion(id_user,content_pub) VALUES (2,'Probando el sistema de publicaciones');
 INSERT INTO publicacion(id_user,content_pub) VALUES (2,'Hoy fue un buen día para programar');
@@ -187,7 +199,7 @@ SELECT p.id_publicacion ID,
        p.content_pub CONTENIDO,
        p.fecha_pub FECHA_PUBLICACION
 FROM PUBLICACION P JOIN USERS U
-    ON P.ID_USER = U.ID_USER;
+                        ON P.ID_USER = U.ID_USER;
 
 
 SELECT p.id_publicacion ID,
@@ -195,41 +207,70 @@ SELECT p.id_publicacion ID,
        p.content_pub CONTENIDO,
        p.fecha_pub FECHA_PUBLICACION
 FROM PUBLICACION P JOIN USERS U
-    ON P.ID_USER = U.ID_USER
+                        ON P.ID_USER = U.ID_USER
 ORDER BY p.id_publicacion DESC
 OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY;
-    
-    
+
+
 SELECT
-U_SENDER.username ENVIO,
-U_RECEIVER.username destino,
-M.content_msg MENSAJE,
-M.FECHA_MENSAJE FECHA_MENSAJE
+    U_SENDER.username ENVIO,
+    U_RECEIVER.username destino,
+    M.content_msg MENSAJE,
+    M.FECHA_MENSAJE FECHA_MENSAJE
 FROM MENSAJE M
-JOIN USERS U_SENDER ON M.ID_USER_SENDER = U_SENDER.ID_USER
-JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
+         JOIN USERS U_SENDER ON M.ID_USER_SENDER = U_SENDER.ID_USER
+         JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
 ORDER BY M.FECHA_MENSAJE DESC;
 
 SELECT
-U_SENDER.username ENVIO,
-U_RECEIVER.username destino,
-M.content_msg MENSAJE,
-TO_CHAR(M.FECHA_MENSAJE, 'DD/MM/YYYY HH:MM:SS') FECHA_MENSAJE
+    U_SENDER.username ENVIO,
+    U_RECEIVER.username destino,
+    M.content_msg MENSAJE,
+    TO_CHAR(M.FECHA_MENSAJE, 'DD/MM/YYYY HH:MM:SS') FECHA_MENSAJE
 FROM MENSAJE M
-JOIN USERS U_SENDER ON M.ID_USER_SENDER = U_SENDER.ID_USER
-JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
+         JOIN USERS U_SENDER ON M.ID_USER_SENDER = U_SENDER.ID_USER
+         JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
 WHERE U_SENDER.ID_USER = 2
 ORDER BY M.FECHA_MENSAJE DESC;
 
 SELECT
-U_SENDER.username ENVIO,
-U_RECEIVER.username destino,
-M.content_msg MENSAJE,
-TO_CHAR(M.FECHA_MENSAJE, 'DD/MM/YYYY HH24:MI:SS') FECHA_MENSAJE
+    U_SENDER.username ENVIO,
+    U_RECEIVER.username destino,
+    M.content_msg MENSAJE,
+    TO_CHAR(M.FECHA_MENSAJE, 'DD/MM/YYYY HH24:MI:SS') FECHA_MENSAJE
 FROM MENSAJE M
-JOIN USERS U_SENDER ON M.ID_USER_SENDER = U_SENDER.ID_USER
-JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
+         JOIN USERS U_SENDER ON M.ID_USER_SENDER = U_SENDER.ID_USER
+         JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
 ORDER BY M.FECHA_MENSAJE DESC;
+
+
+SELECT
+    U_SENDER.username ENVIO,
+    U_RECEIVER.username destino,
+    M.content_msg MENSAJE,
+    TO_CHAR(M.FECHA_MENSAJE, 'DD/MM/YYYY HH24:MI:SS') FECHA_MENSAJE
+FROM MENSAJE M
+         JOIN USERS U_SENDER ON M.ID_USER_SENDER = U_SENDER.ID_USER
+         JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
+ORDER BY M.FECHA_MENSAJE DESC;
+
+
+-- ver que ids de usuarios escribieron a tal receiver
+SELECT DISTINCT id_user_sender CHATS
+FROM MENSAJE
+WHERE id_user_receiver = 2;
+
+SELECT DISTINCT id_user_sender
+FROM MENSAJE
+WHERE id_user_receiver = 2;
+
+-- ver que usuarios escribieron a un receiver
+SELECT DISTINCT
+    U.id_user USER_ID,
+    U.USERNAME CHATS
+FROM MENSAJE M
+         JOIN USERS U ON M.ID_USER_SENDER = U.ID_USER
+WHERE id_user_receiver = 2;
 
 
 SELECT * FROM PUBLICACION;

@@ -1,17 +1,23 @@
 package com.treeaxes.CLI;
 
 import com.treeaxes.Controller.MsgController;
+import com.treeaxes.Controller.UserController;
+import com.treeaxes.Model.UserConversations;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Test {
 
     public static void main(String[] args) {
-        MsgController msgController = new MsgController();
 
-        for (int i = 1; i <= 10; i++){
-            String msg_send = String.valueOf(Math.floor(Math.random()*80000) + 1);
-            System.out.println(msgController.mandarMensaje(2,1,msg_send));
+        List<UserConversations> list = UserController.getChats(2);
+
+        for (UserConversations userConversations : list) {
+            System.out.println(userConversations.getUsername());
+            System.out.println(userConversations.getId_user());
+            System.out.println("-----");
         }
-
 
     }
 }

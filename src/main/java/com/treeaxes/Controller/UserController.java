@@ -2,10 +2,13 @@ package com.treeaxes.Controller;
 import com.treeaxes.DB.ConnDB;
 import com.treeaxes.Debug.LogWriter;
 import com.treeaxes.Model.User;
+import com.treeaxes.Model.UserConversations;
 import com.treeaxes.Model.UserData;
 
 import javax.xml.transform.Result;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserController {
 
@@ -156,7 +159,7 @@ public class UserController {
             System.out.println(e);
         }
 
-    return 0;
+        return 0;
     }
 
     public static String getUsername(int id_user){
@@ -175,6 +178,37 @@ public class UserController {
         }
 
         return "";
+    }
+
+
+    public static List<UserConversations> getChats(int id_user){
+        ArrayList<UserConversations> list = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT U.id_user USER_ID, U.USERNAME CHATS FROM MENSAJE M JOIN USERS U ON M.ID_USER_SENDER = U.ID_USER WHERE id_user_receiver = ?";
+
+        try(Connection conn = ConnDB.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+
+            ps.setInt(1,id_user);
+
+            try(ResultSet rs = ps.executeQuery()){
+
+                while (rs.next()){
+
+                    int id_user_senders = rs.getInt("user_id");
+                    String username = rs.getString("chats");
+                    list.add(new UserConversations(id_user_senders,username));
+
+                }
+
+            }
+
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+
+        return list;
     }
 
     // debug
