@@ -1,9 +1,9 @@
 package com.treeaxes.CLI;
 
+import com.treeaxes.APPUno;
 import com.treeaxes.Controller.UserController;
 import com.treeaxes.Debug.LogWriter;
 import com.treeaxes.Model.IndexChat;
-import com.treeaxes.Model.User;
 import com.treeaxes.Model.UserConversations;
 import com.treeaxes.Model.UserData;
 
@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ChatsMenu {
+
+    public static void NewChat(UserData session) {
+        APPUno.WIP_page(session);
+    }
 
     public static void MyChats(UserData session) {
         // Listas
@@ -31,35 +35,47 @@ public class ChatsMenu {
                     indexList.add(new IndexChat(userConversations.getId_user(), userList.indexOf(userConversations) + 1));
                 }
 
-                UserConversations salirOpcion = new UserConversations(9999, "Salir");
+                // Creador de Cancelar
+                UserConversations salirOpcion = new UserConversations(9999, "Cancelar");
                 indexList.add(new IndexChat(salirOpcion.getId_user(), userList.size() + 1));
                 System.out.println();
                 System.out.println(indexList.getLast().getIndice() + ") " + salirOpcion.getUsername());
+                LogWriter.create(indexList.toString());
 
 
-                boolean loop2 = true;
-
-                while (loop2) {
-                    LogWriter.create(indexList.toString());
-                    System.out.print("Ingresa una opción: ");
-                    int choice = sc.nextInt();
+                System.out.print("Ingresa una opción: ");
+                if(!sc.hasNextInt()){
+                    System.out.println("[!] Debes ingresar un numero.");
                     sc.nextLine();
-
-                    for (IndexChat indexChat : indexList) {
-
-                        if (choice == indexList.getLast().getIndice()) {
-                            System.out.println("salir");
-                            break;
-                        }else if (choice == indexChat.getIndice()) {
-                            System.out.println("Mostrando chat con "+ UserController.getUsername(indexChat.getId_user()));
-                        } else {
-                            System.out.println("Opción no válida.");
-                            break;
-                        }
-
-                    }
-
+                    continue;
                 }
+
+                int choice = sc.nextInt();
+                sc.nextLine();
+
+                boolean selectFound = false;
+
+                for (IndexChat indexChat : indexList) {
+                    if (choice == indexChat.getIndice()) {
+                        selectFound = true;
+
+                        if (indexChat.getId_user() == 9999) {
+                            System.out.println("Cancelando...");
+                            loop = false;
+                        } else {
+                            System.out.println("Mostrando chat con " + UserController.getUsername(indexChat.getId_user()));
+                            sc.nextLine();
+                        }
+                        break;
+                    }
+                }
+
+                if (!selectFound){
+                    System.out.println("Opción no válida.");
+                }
+
+                // Limpia la lista para que no haya un Overflow de datos.
+                indexList.clear();
 
             } else {
                 System.out.println("--- No chats ---\n");

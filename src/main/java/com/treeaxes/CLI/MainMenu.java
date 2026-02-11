@@ -20,37 +20,34 @@ public class MainMenu {
         this.userData = userController.getUserInfo(user);
     }
 
-    public void feed(){
-        System.out.println("Bienvenido " + user);
+    public void MainPage(){
+        System.out.println("====== Bienvenido " + user + " ======");
 
         while(loop){
 
-            System.out.println("\n--- Home ---\n" +
-                            "1. Mis Chats\n" +
-                            "2. Salir\n");
+            System.out.println("\n----- Home -----\n" +
+                            "1. Nuevo Chat\n" +
+                            "2. Mis Chats\n" +
+                            "3. Salir\n");
 
-            System.out.print("Ingresa opción: ");
+            System.out.print("[+] Ingresa opción: ");
             int choice = sc.nextInt();
 
             switch(choice){
 
-                case 1:
+                case 1: // Iniciar un nuevo Chat
+                    ChatsMenu.NewChat(userController.getUserInfo(user));
+                    break;
+
+                case 2: // Ver Chats activos
                     ChatsMenu.MyChats(userController.getUserInfo(user));
                     break;
 
-                case 2:
+                case 3: // Salir
                     loop = false;
                     break;
             }
 
-
-
-            /*
-            System.out.println("Bienvenido " + user);
-            System.out.println("feed de " + user);
-            UserData userData = userController.getUserInfo(user);
-            System.out.println(userData);
-            sc.nextLine();*/
         }
 
     }

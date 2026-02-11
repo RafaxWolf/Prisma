@@ -2,7 +2,6 @@ package com.treeaxes;
 
 import com.treeaxes.CLI.MainMenu;
 import com.treeaxes.Config.AppConfig;
-import com.treeaxes.Config.ConfigLoader;
 import com.treeaxes.Controller.UserController;
 
 import java.util.Scanner;
@@ -28,7 +27,7 @@ public class AppUnoTest {
         String user = "panxitovilla";
 
         MainMenu mainMenu = new MainMenu(user);
-        mainMenu.feed();
+        mainMenu.MainPage();
 
     }
 }

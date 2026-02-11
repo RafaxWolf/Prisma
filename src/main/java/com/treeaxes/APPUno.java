@@ -6,9 +6,8 @@ import com.treeaxes.CLI.RegisterMenu;
 import com.treeaxes.Config.AppConfig;
 import com.treeaxes.Config.ConfigLoader;
 import com.treeaxes.Controller.UserController;
-import com.treeaxes.Debug.DMsg;
+import com.treeaxes.Model.UserData;
 
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class APPUno {
@@ -48,7 +47,7 @@ public class APPUno {
                         System.out.println(user);
                         if (user != null){
                             MainMenu mainMenu = new MainMenu(user);
-                            mainMenu.feed();
+                            mainMenu.MainPage();
                             loop = false;
                         }
 
@@ -84,6 +83,14 @@ public class APPUno {
         }
 
 
+    }
+
+    /// Pagina de WIP (Work In Progress)
+    /// @param session Sesion del Usuario.
+    public static void WIP_page(UserData session){
+        System.out.println("\n[+] Hello " + session.getUsername());
+        System.out.println("[-] This page is in Working Progress...");
+        System.exit(0);
     }
 
 
