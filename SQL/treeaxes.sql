@@ -1,63 +1,54 @@
---- DROP
-DROP TABLE USERS CASCADE CONSTRAINTS;
-DROP TABLE ROLE CASCADE CONSTRAINTS;
-DROP TABLE PUBLICACION CASCADE CONSTRAINTS;
-DROP TABLE MENSAJE CASCADE CONSTRAINTS;
--- DROP TABLE MENSAJE CASCADE CONSTRAINTS;
+--- DROP & PURGE
+DROP TABLE USERS CASCADE CONSTRAINTS PURGE;
+DROP TABLE ROLE CASCADE CONSTRAINTS PURGE;
+DROP TABLE PUBLICACION CASCADE CONSTRAINTS PURGE;
+DROP TABLE MENSAJE CASCADE CONSTRAINTS PURGE;
+
 
 -- OBJETOS
-
+-- Tablas de Usuarios
 CREATE TABLE USERS(
-                      id_user NUMBER(8) GENERATED ALWAYS AS IDENTITY
+      id_user NUMBER(8) GENERATED ALWAYS AS IDENTITY
     INCREMENT BY 1 NOT NULL,
-                      username VARCHAR2(32) NOT NULL UNIQUE,
-                      email VARCHAR2(64) NOT NULL UNIQUE,
-                      pwd VARCHAR2(32) NOT NULL,
-                      register_date DATE DEFAULT SYSDATE NOT NULL,
-                      id_role NUMBER(3) NOT NULL,
-                      banned Number(1) DEFAULT 0 NOT NULL,
-                      CONSTRAINT PK_USER PRIMARY KEY (id_user),
-                      CONSTRAINT chk_is_banned CHECK (banned IN (0,1))
+      username VARCHAR2(32) NOT NULL UNIQUE,
+      email VARCHAR2(64) NOT NULL UNIQUE,
+      pwd VARCHAR2(32) NOT NULL,
+      register_date DATE DEFAULT SYSDATE NOT NULL,
+      id_role NUMBER(3) NOT NULL,
+      banned Number(1) DEFAULT 0 NOT NULL,
+      CONSTRAINT PK_USER PRIMARY KEY (id_user),
+      CONSTRAINT chk_is_banned CHECK (banned IN (0,1))
 );
 
+-- Tabla de roles
 CREATE TABLE ROLE(
-                     id_role NUMBER(3) GENERATED ALWAYS AS IDENTITY
+      id_role NUMBER(3) GENERATED ALWAYS AS IDENTITY
     INCREMENT BY 1 NOT NULL,
-                     nombre_role VARCHAR(20) NOT NULL,
-                     permisos VARCHAR(6) NOT NULL,
-                     CONSTRAINT PK_ROLE PRIMARY KEY (id_role)
+      nombre_role VARCHAR(20) NOT NULL,
+      permisos VARCHAR(6) NOT NULL,
+      CONSTRAINT PK_ROLE PRIMARY KEY (id_role)
 );
 
+-- Tabla de publicaciones
 CREATE TABLE publicacion(
-                            id_publicacion NUMBER(5) GENERATED ALWAYS AS IDENTITY
+      id_publicacion NUMBER(5) GENERATED ALWAYS AS IDENTITY
     INCREMENT BY 1 NOT NULL,
-                            id_user NUMBER(8) NOT NULL,
-                            content_pub VARCHAR2(255),
-                            fecha_pub DATE DEFAULT SYSDATE NOT NULL,
-                            CONSTRAINT PK_PUBLICACION PRIMARY KEY (id_publicacion)
+      id_user NUMBER(8) NOT NULL,
+      content_pub VARCHAR2(255),
+      fecha_pub DATE DEFAULT SYSDATE NOT NULL,
+      CONSTRAINT PK_PUBLICACION PRIMARY KEY (id_publicacion)
 );
 
+-- Tabla de Mensajes
 CREATE TABLE mensaje(
-                        id_mensaje NUMBER(10) GENERATED ALWAYS AS IDENTITY
+      id_mensaje NUMBER(10) GENERATED ALWAYS AS IDENTITY
     INCREMENT BY 1 NOT NULL,
-                        id_user_sender NUMBER(8) NOT NULL,
-                        id_user_receiver NUMBER(8) NOT NULL,
-                        fecha_mensaje DATE DEFAULT SYSDATE NOT NULL,
-                        content_msg VARCHAR2(255),
-                        CONSTRAINT PK_MENSAJE PRIMARY KEY (id_mensaje)
-
+      id_user_sender NUMBER(8) NOT NULL,
+      id_user_receiver NUMBER(8) NOT NULL,
+      fecha_mensaje DATE DEFAULT SYSDATE NOT NULL,
+      content_msg VARCHAR2(255),
+      CONSTRAINT PK_MENSAJE PRIMARY KEY (id_mensaje)
 );
-
-
-/*
-CREATE TABLE mensaje(
-    id_mensaje NUMBER(10)GENERATED ALWAYS AS IDENTITY
-    INCREMENT BY 1 NOT NULL,
-    id_sender NUMBER(8) NOT NULL,
-    id_receiver NUMBER(8) NOT NULL,
-    mensaje VARCHAR2(500),
-    CONSTRAINT PK_MENSAJE PRIMARY KEY (id_mensaje)
-);*/
 
 
 -- LLAVES FORANEAS
@@ -79,16 +70,6 @@ ALTER TABLE mensaje
     ADD CONSTRAINT fk_mensaje_receiver FOREIGN KEY (id_user_receiver)
         REFERENCES USERS (id_user);
 
-/*
-ALTER TABLE mensaje
-    ADD CONSTRAINT FK_MENSAJE_SENDER FOREIGN KEY (id_user)
-        REFERENCES USERS (id_user);
-
-ALTER TABLE mensaje
-    ADD CONSTRAINT FK_MENSAJE_RECEIVER FOREIGN KEY (id_user)
-        REFERENCES USERS (id_user);
-        
-        */
 
 -- POBLACION
 
@@ -103,11 +84,12 @@ INSERT INTO ROLE (NOMBRE_ROLE,PERMISOS) VALUES ('Restricted','100000');
 INSERT INTO ROLE (NOMBRE_ROLE,PERMISOS) VALUES ('VacBanned','000000');
 
 -- Default Users
-INSERT INTO USERS(username,email,pwd,id_role) VALUES ('test','test@test.com','1234',3);
-INSERT INTO USERS(username,email,pwd,id_role) VALUES ('panxitovilla','panixo@gmail.com','12390',4);
-INSERT INTO USERS(username,email,pwd,id_role) VALUES ('rafita','rafito@gmail.com','12390',4);
-INSERT INTO USERS(username,email,pwd,id_role) VALUES ('maxiporro','simba@outlook.com','1234',4);
-INSERT INTO USERS(username,email,pwd,id_role) VALUES ('rafaxgolfo','wolf@yahoo.es','asd123',4);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('treeaxes','business@treeaxes.com','Simbionte1234_',1);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('test','test@test.com','1234',6);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('panxitovilla','panixo@gmail.com','12390',3);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('rafita','rafito@gmail.com','12390',2);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('maxiporro','simbaweta@outlook.com','1234',4);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('rafaxgolfo','wolf@yahoo.es','asd123',5);
 INSERT INTO USERS(username,email,pwd,id_role) VALUES ('seebaputaku','akomitz@nolapone.cl','asd345',4);
 
 
@@ -119,6 +101,7 @@ INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (5,2,'sa
 INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (3,2,'soy rafito');
 INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (3,2,'chao me voy');
 
+-- Publicaciones de Prueba
 INSERT INTO publicacion(id_user,content_pub) VALUES (2,'Probando el sistema de publicaciones');
 INSERT INTO publicacion(id_user,content_pub) VALUES (2,'Hoy fue un buen día para programar');
 INSERT INTO publicacion(id_user,content_pub) VALUES (2,'Estoy aprendiendo Oracle SQL');
@@ -181,11 +164,12 @@ INSERT INTO publicacion(id_user,content_pub) VALUES (2,'Probando el sistema de b
 
 
 -- SELECTS
-
+-- USUARIOS
 SELECT * FROM USERS;
-
 SELECT * FROM ROLE;
 
+
+-- Obtener datos de un usuario
 SELECT u.username NOMBRE_USER,
        u.email CORREO,
        u.pwd PASSWORD,
@@ -194,24 +178,9 @@ SELECT u.username NOMBRE_USER,
 FROM USERS U JOIN ROLE R
                   ON U.ID_ROLE = R.ID_ROLE;
 
-SELECT p.id_publicacion ID,
-       u.username USUARIO,
-       p.content_pub CONTENIDO,
-       p.fecha_pub FECHA_PUBLICACION
-FROM PUBLICACION P JOIN USERS U
-                        ON P.ID_USER = U.ID_USER;
 
-
-SELECT p.id_publicacion ID,
-       u.username USUARIO,
-       p.content_pub CONTENIDO,
-       p.fecha_pub FECHA_PUBLICACION
-FROM PUBLICACION P JOIN USERS U
-                        ON P.ID_USER = U.ID_USER
-ORDER BY p.id_publicacion DESC
-OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY;
-
-
+-- MENSAJES
+-- Ver todos los mensajes enviados
 SELECT
     U_SENDER.username ENVIO,
     U_RECEIVER.username destino,
@@ -222,6 +191,8 @@ FROM MENSAJE M
          JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
 ORDER BY M.FECHA_MENSAJE DESC;
 
+
+-- Ver mensajes enviados de un usuario
 SELECT
     U_SENDER.username ENVIO,
     U_RECEIVER.username destino,
@@ -233,17 +204,8 @@ FROM MENSAJE M
 WHERE U_SENDER.ID_USER = 2
 ORDER BY M.FECHA_MENSAJE DESC;
 
-SELECT
-    U_SENDER.username ENVIO,
-    U_RECEIVER.username destino,
-    M.content_msg MENSAJE,
-    TO_CHAR(M.FECHA_MENSAJE, 'DD/MM/YYYY HH24:MI:SS') FECHA_MENSAJE
-FROM MENSAJE M
-         JOIN USERS U_SENDER ON M.ID_USER_SENDER = U_SENDER.ID_USER
-         JOIN USERS U_RECEIVER ON M.ID_USER_RECEIVER = U_RECEIVER.ID_USER
-ORDER BY M.FECHA_MENSAJE DESC;
 
-
+-- Ver todos los mensajes con fecha y hora
 SELECT
     U_SENDER.username ENVIO,
     U_RECEIVER.username destino,
@@ -264,7 +226,8 @@ SELECT DISTINCT id_user_sender
 FROM MENSAJE
 WHERE id_user_receiver = 2;
 
--- ver que usuarios escribieron a un receiver
+
+-- ver que usuarios escribieron a un determinado usuario
 SELECT DISTINCT
     U.id_user USER_ID,
     U.USERNAME CHATS
@@ -273,7 +236,28 @@ FROM MENSAJE M
 WHERE id_user_receiver = 2;
 
 
+-- PUBLICACIONES
+-- Ver todas las publicaciones
 SELECT * FROM PUBLICACION;
+-- Obtener todas las publicaciones
+SELECT p.id_publicacion ID,
+       u.username USUARIO,
+       p.content_pub CONTENIDO,
+       p.fecha_pub FECHA_PUBLICACION
+FROM PUBLICACION P JOIN USERS U
+                        ON P.ID_USER = U.ID_USER;
+
+
+-- Obtener un numero contreto de publicaciones
+SELECT p.id_publicacion ID,
+       u.username USUARIO,
+       p.content_pub CONTENIDO,
+       p.fecha_pub FECHA_PUBLICACION
+FROM PUBLICACION P JOIN USERS U
+                        ON P.ID_USER = U.ID_USER
+ORDER BY p.id_publicacion DESC
+OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY;
+
 
 --
 

@@ -1,5 +1,6 @@
 package com.treeaxes.CLI;
 
+import com.treeaxes.APPUno;
 import com.treeaxes.Controller.UserController;
 import com.treeaxes.Model.UserData;
 
@@ -10,8 +11,8 @@ public class MainMenu {
     UserController userController = new UserController();
     Scanner sc = new Scanner(System.in);
 
-    private UserData userData;
-    private String user;
+    private final String user;
+    private final UserData userData;
 
     boolean loop = true;
 
@@ -28,7 +29,7 @@ public class MainMenu {
             System.out.println("\n----- Home -----\n" +
                             "1. Nuevo Chat\n" +
                             "2. Mis Chats\n" +
-                            "3. Salir\n");
+                            "3. Cerrar Sesion\n");
 
             System.out.print("[+] Ingresa opción: ");
             int choice = sc.nextInt();
@@ -49,6 +50,8 @@ public class MainMenu {
             }
 
         }
+
+        APPUno.main(null);
 
     }
 }

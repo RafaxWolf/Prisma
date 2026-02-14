@@ -5,7 +5,7 @@ import com.treeaxes.CLI.MainMenu;
 import com.treeaxes.CLI.RegisterMenu;
 import com.treeaxes.Config.AppConfig;
 import com.treeaxes.Config.ConfigLoader;
-import com.treeaxes.Controller.UserController;
+import com.treeaxes.Debug.LogWriter;
 import com.treeaxes.Model.UserData;
 
 import java.util.Scanner;
@@ -17,11 +17,10 @@ public class APPUno {
      * Nota: No agregar esta misma linea en otros archivos,
      * las agregarlo mas veces re-carga la configuracion y puede llegar a dar problemas.
      * Es mejor importarlo.
-     * */
+    */
     public static final ConfigLoader cfg = new ConfigLoader();
 
     public static void main(String[] args) {
-        UserController userController = new UserController();
         Scanner sc = new Scanner(System.in);
 
         AppConfig.initEnv();
@@ -29,7 +28,7 @@ public class APPUno {
         boolean loop = true;
         while(loop) {
             // Menu
-            System.out.println("\n---Bienvenido a "+Brand.NOM_APP+"---\n" +
+            System.out.println("\n----- Bienvenido a " + Brand.NOM_APP + " -----\n" +
                     "1. Iniciar Sesión\n" +
                     "2. Registrarse\n" +
                     "3. Salir");
@@ -41,10 +40,10 @@ public class APPUno {
             switch (opcion){
                 case 1: // Iniciar Sesion
                     LoginMenu loginMenu = new LoginMenu();
-
                     try{
                         String user = loginMenu.inicioSesion();
-                        System.out.println(user);
+                        LogWriter.create("[*] Logged User: " + user);
+
                         if (user != null){
                             MainMenu mainMenu = new MainMenu(user);
                             mainMenu.MainPage();
@@ -52,25 +51,26 @@ public class APPUno {
                         }
 
                     } catch (Exception e) {
-                        System.out.println("Error al iniciar Sesion");
+                        System.out.println("[+] Error al iniciar Sesion: " + e.getMessage());
+                        LogWriter.create("[+] Error al iniciar Sesion: " + e.getMessage());
                     }
 
                     break;
+
                 case 2: // Registrar
                     RegisterMenu  registerMenu = new RegisterMenu();
-
                     try{
                         if (registerMenu.registroMenu()) {
-                            System.out.println("[+] Usuario Registrado con exito.");
+                            System.out.println("\n[+] Usuario Registrado con exito.\n");
                             break;
                         }
                     } catch (Exception e) {
-                        System.out.println("Error al registrar Usuario");
+                        System.out.println("\n[!] Error al registrar el Usuario\n");
                     }
                     break;
 
                 case 3: // Exit
-                    System.out.println("[+] Saliendo...");
+                    System.out.println("\n[+] Saliendo...");
                     loop = false;
                     break;
 

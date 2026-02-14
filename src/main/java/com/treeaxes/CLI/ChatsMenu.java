@@ -27,7 +27,7 @@ public class ChatsMenu {
         boolean loop = true;
 
         while (loop) {
-            System.out.println("\n--- Chats Menu ---");
+            System.out.println("\n----- Chats Menu -----");
             if (!userList.isEmpty()) {
                 for (UserConversations userConversations : userList) {
                     System.out.println();
@@ -78,7 +78,7 @@ public class ChatsMenu {
                 indexList.clear();
 
             } else {
-                System.out.println("--- No chats ---\n");
+                System.out.println("----- No chats -----\n");
                 loop = false;
                 sc.nextLine();
             }
