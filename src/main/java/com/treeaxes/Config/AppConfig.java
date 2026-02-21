@@ -66,7 +66,8 @@ public class AppConfig {
     /// Inicializa el entorno de trabajo creando las carpetas y archivos necesarios
     public static void initEnv(){
 
-        LogWriter.create("[*] Verificando entorno de trabajo en: " + RUTA_BASE);
+        System.out.println("[/] Verificando entorno de trabajo en: " + RUTA_BASE);
+        //LogWriter.create("[*] Verificando entorno de trabajo en: " + RUTA_BASE);
 
         //Crear las carpetas necesarias
         makeDirectory(RUTA_BASE); //Crea la carpeta base
@@ -87,8 +88,8 @@ public class AppConfig {
             try (FileWriter fw = new FileWriter(file)) {
                 fw.write(CONFIG_CONTENT);
                 System.out.println("[+] Archivo de Configuracion creado.");
-                System.out.println("[*]Por favor ingrese sus datos de configuracion aqui: " + RUTA_PROPERTIES);
-
+                System.out.println("[*] Por favor ingrese sus datos de configuracion aqui: " + RUTA_PROPERTIES);
+                //System.exit(0);
             } catch (IOException e){
                 System.out.println("[!] Error al escribir config.properties \n" + e.getMessage());
                 System.exit(1);
@@ -114,7 +115,8 @@ public class AppConfig {
                 System.exit(1);
             }
         } else {
-            LogWriter.create("[*] Directorio encontrado: " + ruta);
+            System.out.println("[+] Directorio encontrado: " + ruta);
+            //LogWriter.create("[*] Directorio encontrado: " + ruta);
         }
     }
 

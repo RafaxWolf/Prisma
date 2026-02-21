@@ -23,7 +23,7 @@ public class APPUno {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        AppConfig.initEnv();
+        //AppConfig.initEnv();
 
         boolean loop = true;
         while(loop) {

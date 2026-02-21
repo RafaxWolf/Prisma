@@ -1,7 +1,5 @@
 package com.treeaxes.Config;
 
-import com.treeaxes.Debug.LogWriter;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,16 +27,24 @@ public class ConfigLoader {
 
             // Cargar las propiedades del archivo
             prop.load(input);
-            System.out.println("[*] Configuracion cargada desde "+ rutaArchivo);
+            System.out.println("[*] Configuración cargada desde "+ rutaArchivo);
 
         } catch (IOException e){
             System.out.println("[!] Error al intentar cargar: " + rutaArchivo);
+            System.out.println("[!] Creando archivo de configuración desde cero...");
+            AppConfig.initEnv();
         }
 
         // ====== Validadores ======
         // Verificador de estructura del archivo config.properties
-        System.out.println("[*] Validando Configuracion...");
+        System.out.println("[/] Validando Configuración...");
         for (String key : REQUIRED_PROP) {
+            if(prop.isEmpty()) {
+                System.out.println("[!] El Archivo de configuración no existe.");
+                System.out.println("[!] Creando el archivo de configuración desde cero...");
+                AppConfig.initEnv();
+            }
+
             if(!prop.containsKey(key)) { // Si alguna de las configuraciones no se encuentra
                 System.out.println("[!] Error: La Estructura del archivo es incorrecta.");
                 System.out.println("[!] La propiedad esencial '" + key + "' no se encuentra en: " + rutaArchivo);
@@ -59,19 +65,21 @@ public class ConfigLoader {
 
         // Validar app.debug sea booleano
         String debugValue = prop.getProperty("app.debug");
-        if(!debugValue.equalsIgnoreCase("true") &&
-                !debugValue.equalsIgnoreCase("false")) { // Si "app.debug" no es "true" o "false" devuelve un error.
+        if(!debugValue.equalsIgnoreCase("true") && !debugValue.equalsIgnoreCase("false")) { // Si "app.debug" no es "true" o "false" devuelve un error.
 
             System.out.println("[!] Error: La propiedad 'app.debug' debe ser 'true' o 'false' en: " + rutaArchivo);
-            System.out.println("[!] Por favor, corriga el archivo de configuración.");
+            System.out.println("[!] Por favor, corrija el archivo de configuración.");
             System.exit(1);
         }
 
-        System.out.println("[*] Configuracion valida.");
+        System.out.println("[+] La Configuración es valida.");
     }
 
 
-    /// Obtener valor de una propiedad
+    /// Obtener valor de una propiedad.
+    ///
+    /// Obtiene el valor de una propiedad
+    /// @param key Propiedad de donde obtener el valor
     public String getProperty(String key) {
         return prop.getProperty(key);
     }
