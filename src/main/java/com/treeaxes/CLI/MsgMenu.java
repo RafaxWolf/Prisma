@@ -5,5 +5,5 @@ import com.treeaxes.Controller.MsgController;
 public class MsgMenu {
     MsgController msgController = new MsgController();
 
-    private String userId;
+
 }

@@ -15,15 +15,12 @@ public class APPUno {
     /*
      * Cargador de configuración
      * Nota: No agregar esta misma linea en otros archivos,
-     * las agregarlo mas veces re-carga la configuracion y puede llegar a dar problemas.
-     * Es mejor importarlo.
+     * agregarlo mas veces recarga la configuracion y puede llegar a dar problemas.
     */
     public static final ConfigLoader cfg = new ConfigLoader();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        //AppConfig.initEnv();
 
         boolean loop = true;
         while(loop) {

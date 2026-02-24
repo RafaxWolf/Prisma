@@ -35,14 +35,12 @@ public class UserController {
             return ps.executeUpdate() > 0;
         }
         catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("usuario ya esta registrado");
-            //LogWriter.create("[*] usuario ya esta registrado");
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            //LogWriter.create(ex.getMessage());
+            System.out.println("[!] El usuario ya esta registrado");
+            LogWriter.create("[*] usuario ya esta registrado");
+        } catch (SQLException e) {
+            System.out.println("[!] Error al registrar usuario.");
+            LogWriter.create("[*] Error al registrar usuario: " + e.getMessage());
         }
-
-
 
         return false;
     }
@@ -90,6 +88,7 @@ public class UserController {
 
     }
 
+    // Obtener datos del usuario
     public UserData getUserInfo(String username){
 
         String sql = "SELECT * FROM USERS WHERE username = ?";
@@ -123,10 +122,9 @@ public class UserController {
     }
 
 
+    // Obtener nombre del rol
     public static String getRoleName(int id_delRol){
         String sql = "SELECT * FROM ROLE WHERE id_role = ?";
-
-
 
         try(Connection conn = ConnDB.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -144,6 +142,8 @@ public class UserController {
 
     }
 
+
+    // Obtener id del usuario
     public static int getIdUser(String username){
         String sql = "SELECT * FROM USERS WHERE username = ?";
 
@@ -162,6 +162,8 @@ public class UserController {
         return 0;
     }
 
+
+    // Obtener nombre del usuario
     public static String getUsername(int id_user){
         String sql = "SELECT * FROM USERS WHERE id_user = ?";
 
@@ -181,6 +183,7 @@ public class UserController {
     }
 
 
+    // Obtener conversaciones del usuario
     public static List<UserConversations> getChats(int id_user){
         ArrayList<UserConversations> list = new ArrayList<>();
 
@@ -206,7 +209,6 @@ public class UserController {
         } catch (Exception e){
             System.out.println(e);
         }
-
 
         return list;
     }

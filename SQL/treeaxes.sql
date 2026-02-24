@@ -85,8 +85,8 @@ INSERT INTO ROLE (NOMBRE_ROLE,PERMISOS) VALUES ('VacBanned','000000');
 
 -- Default Users
 INSERT INTO USERS(username,email,pwd,id_role) VALUES ('treeaxes','business@treeaxes.com','Simbionte1234_',1);
-INSERT INTO USERS(username,email,pwd,id_role) VALUES ('test','test@test.com','1234',6);
 INSERT INTO USERS(username,email,pwd,id_role) VALUES ('panxitovilla','panixo@gmail.com','12390',3);
+INSERT INTO USERS(username,email,pwd,id_role) VALUES ('test','test@test.com','1234',6);
 INSERT INTO USERS(username,email,pwd,id_role) VALUES ('rafita','rafito@gmail.com','12390',2);
 INSERT INTO USERS(username,email,pwd,id_role) VALUES ('maxiporro','simbaweta@outlook.com','1234',4);
 INSERT INTO USERS(username,email,pwd,id_role) VALUES ('rafaxgolfo','wolf@yahoo.es','asd123',5);
