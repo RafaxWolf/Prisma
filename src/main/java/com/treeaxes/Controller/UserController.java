@@ -187,12 +187,14 @@ public class UserController {
     public static List<UserConversations> getChats(int id_user){
         ArrayList<UserConversations> list = new ArrayList<>();
 
-        String sql = "SELECT DISTINCT U.id_user USER_ID, U.USERNAME CHATS FROM MENSAJE M JOIN USERS U ON M.ID_USER_SENDER = U.ID_USER WHERE id_user_receiver = ?";
+        String sql = "SELECT DISTINCT U.id_user USER_ID, U.USERNAME CHATS FROM MENSAJE M JOIN USERS U ON M.ID_USER_SENDER = U.ID_USER WHERE id_user_receiver = ? UNION SELECT U.id_user AS USER_ID, U.username AS CHATS \n" +
+                "FROM MENSAJE M JOIN USERS U ON M.id_user_receiver = U.id_user WHERE M.id_user_sender = ?";
 
         try(Connection conn = ConnDB.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
 
             ps.setInt(1,id_user);
+            ps.setInt(2,id_user);
 
             try(ResultSet rs = ps.executeQuery()){
 

@@ -1,7 +1,6 @@
 package com.treeaxes;
 
 import com.treeaxes.CLI.MainMenu;
-import com.treeaxes.Config.AppConfig;
 import com.treeaxes.Config.ConfigLoader;
 import com.treeaxes.Controller.UserController;
 

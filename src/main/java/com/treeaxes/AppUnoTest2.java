@@ -24,7 +24,7 @@ public class AppUnoTest2 {
 
         AppConfig.initEnv();
 
-        String user = "panxitovilla";
+        String user = "maxiporro";
 
         MainMenu mainMenu = new MainMenu(user);
         mainMenu.MainPage();

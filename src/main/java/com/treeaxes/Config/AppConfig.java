@@ -75,6 +75,9 @@ public class AppConfig {
         makeDirectory(RUTA_LOGS); //Crea la carpeta de logs
 
         crearArchivoConfig(RUTA_BASE); //Crea el archivo config.properties
+
+        System.out.println("[+] Configuracion creada.");
+        System.exit(0);
     }
 
 

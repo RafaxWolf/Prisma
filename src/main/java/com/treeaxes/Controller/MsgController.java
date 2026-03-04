@@ -1,9 +1,14 @@
 package com.treeaxes.Controller;
 
 import com.treeaxes.DB.ConnDB;
+import com.treeaxes.Debug.LogWriter;
+import com.treeaxes.Model.MsgUnit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MsgController {
 
@@ -13,7 +18,7 @@ public class MsgController {
         conexion = new ConnDB();
     }
 
-    public boolean mandarMensaje(int user_sender, int user_receiver, String mensaje) {
+    public static boolean mandarMensaje(int user_sender, int user_receiver, String mensaje) {
         try {
             // Consulta SQL
             String sql = "INSERT INTO MENSAJE(id_user_sender,id_user_receiver,content_msg) VALUES (?,?,?)";
@@ -34,6 +39,45 @@ public class MsgController {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static List<MsgUnit> recuperarChat(int user_id_x,int user_id_y){
+
+        ArrayList<MsgUnit> msg_list = new ArrayList<>();
+
+        String sql = "SELECT U_SENDER.username AS EMISOR, M.content_msg AS MENSAJE, TO_CHAR(M.fecha_mensaje, 'DD/MM/YYYY HH24:MI:SS') AS FECHA FROM mensaje M JOIN USERS U_SENDER ON M.id_user_sender = U_SENDER.id_user\n" +
+                "WHERE (M.id_user_sender = ? AND M.id_user_receiver = ?) OR (M.id_user_sender = ? AND M.id_user_receiver = ?) ORDER BY M.fecha_mensaje ASC";
+                //                         1                          2                         3                          4
+                try(Connection conn = ConnDB.getConnection();
+                    PreparedStatement ps = conn.prepareStatement(sql)){
+
+                    ps.setInt(1, user_id_x);
+                    ps.setInt(2, user_id_y);
+                    ps.setInt(3, user_id_y);
+                    ps.setInt(4, user_id_x);
+
+                    try (ResultSet rs = ps.executeQuery()){
+
+
+                        while (rs.next()){
+
+                            String emisorMensaje =  rs.getString("EMISOR");
+                            String fechaMensaje =  rs.getString("FECHA");
+                            String MensajeContent = rs.getString("MENSAJE");
+
+                            msg_list.add(new MsgUnit(emisorMensaje,MensajeContent,fechaMensaje));
+
+                        }
+
+                    }
+
+
+                } catch (Exception e) {
+                    LogWriter.create("problemas con la linea");
+                }
+
+
+        return msg_list;
     }
 
 

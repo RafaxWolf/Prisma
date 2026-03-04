@@ -1,9 +1,11 @@
 package com.treeaxes.CLI;
 
 import com.treeaxes.APPUno;
+import com.treeaxes.Controller.MsgController;
 import com.treeaxes.Controller.UserController;
 import com.treeaxes.Debug.LogWriter;
 import com.treeaxes.Model.IndexChat;
+import com.treeaxes.Model.MsgUnit;
 import com.treeaxes.Model.UserConversations;
 import com.treeaxes.Model.UserData;
 
@@ -14,7 +16,37 @@ import java.util.Scanner;
 public class ChatsMenu {
 
     public static void NewChat(UserData session) {
-        APPUno.WIP_page(session);
+
+        Scanner sc2 = new Scanner(System.in);
+
+        System.out.print("Ingresa un usuario para escribirle: ");
+        String destinatario = sc2.nextLine();
+        int destinatarioBaseDatos = UserController.getIdUser(destinatario);
+
+        LogWriter.create(String.valueOf(destinatarioBaseDatos));
+        if(destinatarioBaseDatos == 0){
+            System.out.println("[!] Usuario ingresado no existe.");
+        } else if(destinatarioBaseDatos == session.getId_user()){
+            System.out.println("[!] No puedes escribirte a ti mismo");
+        } else {
+            System.out.println("Escribele un mensaje a " + destinatario+":");
+            String mensaje = sc2.nextLine();
+
+            if (mensaje.isEmpty() || mensaje.length() > 255 || mensaje.equals("")){
+                System.out.println("[!] Error al enviar el mensaje");
+            } else {
+                try {
+                    MsgController.mandarMensaje(session.getId_user(),destinatarioBaseDatos,mensaje);
+                    System.out.println("mensaje mandado con exito");
+
+                } catch (Exception e) {
+                    System.out.println("[!] Error al enviar el mensaje!");
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
     }
 
     public static void MyChats(UserData session) {
@@ -59,11 +91,17 @@ public class ChatsMenu {
                     if (choice == indexChat.getIndice()) {
                         selectFound = true;
 
-                        if (indexChat.getId_user() == 9999) {
+                        if (indexChat.getId_user() == 9999) { // Cancelar
                             System.out.println("Cancelando...");
                             loop = false;
-                        } else {
+                        } else { // Mostrar Chat
                             System.out.println("Mostrando chat con " + UserController.getUsername(indexChat.getId_user()));
+
+                            List<MsgUnit> historialMensajes = MsgController.recuperarChat(session.getId_user(),indexChat.getId_user());
+
+                            for (MsgUnit msgUnit : historialMensajes) {
+                                System.out.println(msgUnit.getEmisor() + ": " + msgUnit.getContent());
+                            }
                             sc.nextLine();
                         }
                         break;
