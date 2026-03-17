@@ -53,10 +53,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>4.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc11-production</artifactId>
+            <artifactId>ojdbc11</artifactId>
             <version>23.26.1.0.0</version>
-            <type>pom</type>
             <scope>compile</scope>
         </dependency>
 
