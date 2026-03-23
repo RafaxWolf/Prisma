@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded",function() {
+// Deprecated
+/* document.addEventListener("DOMContentLoaded",function() {
     console.log("hola")
 
     const boton = document.getElementById("simbia")
@@ -14,4 +15,8 @@ document.addEventListener("DOMContentLoaded",function() {
 
     boton.addEventListener("click", buttonClick)
 
-})
+}) */
+
+// ----------------------------------------------------------
+
+// Boton para activar Dark Mode en el Login

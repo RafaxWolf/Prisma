@@ -18,14 +18,15 @@ public class AuthController {
 
     @PostMapping("/auth")
     public String auth(@RequestParam("username") String username, HttpSession session) {
+            System.out.println();
             if (!userRep.existsByUsername(username)) {
-
                 User user = new User();
                 user.setUsername(username);
                 userRep.save(user);
+                System.out.println();
 
             } else{
-                System.out.println("usuario ya existe prosiga mi rey");
+                System.out.println("usuario ya existe prosiga mi rey\n");
             }
 
             session.setAttribute("username", username);

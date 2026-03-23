@@ -3,28 +3,29 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Login</title>
         <link th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
     </head>
     <body>
 
         <div class="container mt-5">
-
             <div class="card">
 
                 <div class="card-body">
                     <h5 class="card-title">Login</h5>
 
                     <form action="/auth" method="post">
-
-
                         <div class="input-group">
                             <span type="text" class="input-group-text">@</span>
                             <input type="text" class="form-control" name="username">
                         </div>
 
-
-                        <input type="submit" class="btn btn-primary mt-5" value="mandar">
+                        <div class="input-group">
+                            <span type="text" class="input-group-text">🔒</span>
+                            <input type="text" class="form-control" name="password">
+                        </div>    
+                        
+                        <input type="submit" class="btn btn-primary mt-5" value="Iniciar Sesion">
 
 
                     </form>

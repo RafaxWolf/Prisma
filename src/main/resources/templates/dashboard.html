@@ -1,185 +1,183 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido</title>
-    <link th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
-</head>
-<body>
-<!--- Barra navegacion-->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bienvenido a Prisma</title>
+        <link th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
+    </head>
+    <body>
+    <!--- Barra navegacion-->
+    <!-- Aca huele mas a IA que las pruebas del MaxiPorro -->
+    <nav class="navbar navbar-expand-lg bg-black">
 
-<nav class="navbar navbar-expand-lg bg-black">
+        <div class="container-fluid">
+            <a href="#" class="nav-brand">
+                <img th:src="@{/img/prisma_placeholder.png}" alt="" width="120" height="50">
+            </a>
 
-    <div class="container-fluid">
-
-
-        <a href="#" class="nav-brand">
-            <img th:src="@{/img/prisma_placeholder.png}" alt="" width="120" height="50">
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="filter: invert();">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="filter: invert();">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
 
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarNav">
 
-            <div class="input-group ms-auto w-50 d-flex"> <!-- ms 3 para margen izquierda, width-50 para darle un ancho-->
-                <span class="input-group-text" id="basic-addon1">@</span>
-                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                <button class="btn btn-outline-light">Buscar</button>
-            </div>
-
-
-            <ul class="navbar-nav ms-auto"> <!-- ms auto para alinear a la derecha-->
+                <div class="input-group ms-auto w-50 d-flex"> <!-- ms 3 para margen izquierda, width-50 para darle un ancho-->
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    <button class="btn btn-outline-light">Buscar</button>
+                </div>
 
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white active">Inicio</a>
-                </li>
+                <ul class="navbar-nav ms-auto"> <!-- ms auto para alinear a la derecha-->
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white">Prisma Chat</a>
-                </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white">Configuración</a>
-                </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-white active">Inicio</a>
+                    </li>
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img th:src="@{/img/usuario.svg}" width="25" height="25"> <span th:text="${session.username}">null</span>
-                    </a>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-white">Prisma Chat</a>
+                    </li>
 
-                    <ul class="dropdown-menu">
-                        <li><a href="#" class="dropdown-item">Mi Perfil</a></li>
-                        <li><a th:href="@{/logout}" class="dropdown-item">Cerrar Sesión</a></li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-white">Configuración</a>
+                    </li>
 
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img th:src="@{/img/usuario.svg}" width="25" height="25"> <span th:text="${session.username}">null</span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item">Mi Perfil</a></li>
+                            <li><a th:href="@{/logout}" class="dropdown-item">Cerrar Sesión</a></li>
+
+                        </ul>
+                    </li>
 
 
 
 
-            </ul>
+                </ul>
 
-
-
-        </div>
-
-    </div>
-</nav>
-
-<!--- Fin barra navegacion-->
-
-
-<!--- canvas mensajes-->
-<div class="offcanvas offcanvas-start bg-dark shadow" tabindex="-1" id="offcanvasExample" >
-
-    <div class="offcanvas-header">
-
-        <h5 class="offcanvas-title text-white">Mis Chats</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-
-    <div class="offcanvas-body text-white">
-
-
-        <div class="card mb-3" style="cursor: pointer;">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="img/usuario-black.svg" alt="" width="20" height="20">
-                    @simvio</h5>
 
 
             </div>
+
+        </div>
+    </nav>
+
+    <!--- Fin barra navegacion-->
+
+
+    <!--- canvas mensajes-->
+    <div class="offcanvas offcanvas-start bg-dark shadow" tabindex="-1" id="offcanvasExample" >
+
+        <div class="offcanvas-header">
+
+            <h5 class="offcanvas-title text-white">Mis Chats</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
-        <div class="card mb-3" style="cursor: pointer;">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="img/usuario-black.svg" alt="" width="20" height="20">
-                    @sunga</h5>
+        <div class="offcanvas-body text-white">
 
+
+            <div class="card mb-3" style="cursor: pointer;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <img src="img/usuario-black.svg" alt="" width="20" height="20">
+                        @simvio</h5>
+
+
+                </div>
+            </div>
+
+            <div class="card mb-3" style="cursor: pointer;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <img src="img/usuario-black.svg" alt="" width="20" height="20">
+                        @sunga</h5>
+
+
+                </div>
+            </div>
+
+            <div class="card mb-3" style="cursor: pointer;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <img src="img/usuario-black.svg" alt="" width="20" height="20">
+                        @rafawolfo</h5>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <!--- canvas mensajes-->
+
+    <a th:href="@{#offcanvasExample}" class="btn" data-bs-toggle="offcanvas" role="button" aria-controls="offcanvasExample" >
+        =
+    </a>
+
+
+    <div class="container">
+
+        <div class="title">
+            <h1>Mis Chats</h1>
+        </div>
+
+        <div class="row">
+
+            <div class="card mt-5 col">
+
+                <h2>Usuario1</h2>
 
             </div>
-        </div>
 
-        <div class="card mb-3" style="cursor: pointer;">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <img src="img/usuario-black.svg" alt="" width="20" height="20">
-                    @rafawolfo</h5>
+            <div class="card mt-5 col">
 
+                <h2>Usuario2</h2>
 
             </div>
+
+            <div class="card mt-5 col">
+
+                <h2>Usuario3</h2>
+
+            </div>
+
+            <div class="card mt-5 col">
+
+                <h2>Usuario4</h2>
+
+            </div>
+
+            <div class="card mt-5 col">
+
+                <h2>Usuario5</h2>
+
+            </div>
+
+            <div class="card mt-5 col">
+
+                <h2>Usuario6</h2>
+
+            </div>
+
         </div>
+
 
     </div>
 
 
-
-</div>
-
-<!--- canvas mensajes-->
-
-<a th:href="@{#offcanvasExample}" class="btn" data-bs-toggle="offcanvas" role="button" aria-controls="offcanvasExample" >
-    =
-</a>
-
-
-<div class="container">
-
-    <div class="title">
-        <h1>Mis Chats</h1>
-    </div>
-
-    <div class="row">
-
-        <div class="card mt-5 col">
-
-            <h2>Usuario1</h2>
-
-        </div>
-
-        <div class="card mt-5 col">
-
-            <h2>Usuario2</h2>
-
-        </div>
-
-        <div class="card mt-5 col">
-
-            <h2>Usuario3</h2>
-
-        </div>
-
-        <div class="card mt-5 col">
-
-            <h2>Usuario4</h2>
-
-        </div>
-
-        <div class="card mt-5 col">
-
-            <h2>Usuario5</h2>
-
-        </div>
-
-        <div class="card mt-5 col">
-
-            <h2>Usuario6</h2>
-
-        </div>
-
-    </div>
-
-
-</div>
-
-
-<script type="text/javascript" th:src="@{/bootstrap/bootstrap.bundle.min.js}"></script>
-</body>
+    <script type="text/javascript" th:src="@{/bootstrap/bootstrap.bundle.min.js}"></script>
+    </body>
 </html>
