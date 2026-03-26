@@ -17,23 +17,24 @@ public class AuthController {
     private UserRep userRep;
 
     @PostMapping("/auth")
-    public String auth(@RequestParam("username") String username, HttpSession session) {
+    public String auth(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
+        System.out.println();
+        System.out.println("[Debug] Password: " + password);
+        if (!userRep.existsByUsername(username)) {
+            User user = new User();
+            user.setUsername(username);
+            userRep.save(user);
             System.out.println();
-            if (!userRep.existsByUsername(username)) {
-                User user = new User();
-                user.setUsername(username);
-                userRep.save(user);
-                System.out.println();
 
-            } else{
-                System.out.println("usuario ya existe prosiga mi rey\n");
-            }
+        } else {
+            System.out.println("usuario ya existe prosiga mi rey\n");
+        }
 
-            session.setAttribute("username", username);
+        session.setAttribute("username", username);
 
-            System.out.println("usuario logeado: " + username);
+        System.out.println("usuario logeado: " + username);
 
-            return "redirect:/dashboard";
+        return "redirect:/dashboard";
 
     }
 

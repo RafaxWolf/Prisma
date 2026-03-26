@@ -1,22 +1,20 @@
-// Deprecated
-/* document.addEventListener("DOMContentLoaded",function() {
-    console.log("hola")
+// Boton para activar Dark Mode en el Login
+document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("darkModeToggle");
 
-    const boton = document.getElementById("simbia")
-    const outputArea = document.getElementById("outputArea")
-
-    function buttonClick() {
-
-        outputArea.innerHTML = "boton clickeado maxci trola"
-        console.log("boton clickeado correctamente")
-        alert("hola", "hola mando")
-        console.log("hola")
+    // Load from localStorage
+    if(localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark-mode")
+        toggle.checked = true;
     }
 
-    boton.addEventListener("click", buttonClick)
-
-}) */
-
-// ----------------------------------------------------------
-
-// Boton para activar Dark Mode en el Login
+    toggle.addEventListener("change", () => {
+        if(toggle.checked) {
+            document.body.classList.add("dark-mode")
+            localStorage.setItem("dark-mode", "enabled")
+        } else {
+            document.body.classList.remove("dark-mode")
+            localStorage.setItem("dark-mode", "disabled")
+        }
+    })
+})
