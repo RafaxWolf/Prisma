@@ -11,7 +11,7 @@ public class GetTimeNow {
 
     public static String getFormattedTime() {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy ");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");
         return now.format(formato);
     }
 

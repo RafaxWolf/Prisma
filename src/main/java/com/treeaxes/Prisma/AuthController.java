@@ -32,7 +32,7 @@ public class AuthController {
 
         session.setAttribute("username", username);
 
-        System.out.println("usuario logeado: " + username);
+        System.out.println("usuario logueado: " + username);
 
         return "redirect:/dashboard";
 
@@ -56,6 +56,10 @@ public class AuthController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
+
+        if (session.getAttribute("username") == null) {
+            return "redirect:/";
+        }
 
         System.out.println("Cerro sessión el usuario " + session.getAttribute("username"));
         session.invalidate();
