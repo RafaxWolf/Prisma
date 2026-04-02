@@ -58,12 +58,7 @@
                         </ul>
                     </li>
 
-
-
-
                 </ul>
-
-
 
             </div>
 
@@ -170,6 +165,15 @@
 
                 <h2>Usuario6</h2>
 
+            </div>
+
+            <!-- Este texto solo aparecera si el usuario es Panxitovilla -->
+
+            <div>
+                <th:block class="mt-5 col">
+                    <h2>Welcome, ${session.username}</h2>
+                    <p th:if="${session.username} == panxitovilla">You are an Administrator</p>
+                </th:block>
             </div>
 
         </div>
