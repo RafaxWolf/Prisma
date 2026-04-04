@@ -11,17 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AdminController {
 
-    @Autowired
-    private UserRep userRep;
-
-    @GetMapping("/adminpanel")
-    public String adminpanel(@RequestParam("username") String username, HttpSession session) {
-        return "adminpanel";
+    @PostMapping("/getadmin")
+    public String getAdmin() {
+        return "redirect:/adminpanel";
     }
 
-    @PostMapping("/makeadmin")
-    public String makeadmin(@RequestParam("username") String username, HttpSession session) {
-        return "index";
+    @GetMapping("/adminpanel")
+    public String getAdminPanel() {
+        return "adminpanel";
     }
 
 }

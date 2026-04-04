@@ -16,12 +16,31 @@ public class AuthController {
     @Autowired
     private UserRep userRep;
 
+    /*
+    * Endpoint para autenticar a un usuario. Si el usuario no existe, se crea uno nuevo con el nombre de usuario proporcionado.
+    * Nota de Wolf: a esta mierda le falta aún el sistema de contraseñas. Cuando se lo agreguemos ya nos habremos titulado.
+    * */
     @PostMapping("/auth")
-    public String auth(@RequestParam("username") String username, @RequestParam(value = "password") String password, HttpSession session) {
+    public String auth(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
+
+        if(username.isEmpty()) {
+            System.out.println("[!] El usuario no puede estar vacío\n");
+            return "redirect:/";
+        }
+
+        if(password.isEmpty()) {
+            System.out.println("[!] Contraseña vacia. asignando contraseña por defecto");
+            password = "Password";
+        }
+
+
+        User user = new User();
+
         System.out.println();
-        System.out.println("[Debug] Password: " + password);
+        System.out.println("[Debug] Password: " + password); // Muestra la contraseña solamente para que el backend no explote.
+
+        // Verificador de usuario existente y de admin
         if (!userRep.existsByUsername(username)) {
-            User user = new User();
             user.setUsername(username);
             userRep.save(user);
             System.out.println();
@@ -30,17 +49,27 @@ public class AuthController {
             System.out.println("usuario ya existe prosiga mi rey\n");
         }
 
-        String role = "";
-
+        /*
+         * Settea en la sesión del usuario su nombre de usuario y si es admin o no.
+         * (0 usuario normal / 1 usuario admin)
+         *
+         * Nota: el sistema de admins puede cambiar asi que esto no es definitivo
+         * */
+        int is_admin = user.getIsAdmin();
         session.setAttribute("username", username);
-        session.setAttribute("user", role);
+        session.setAttribute("isAdmin", is_admin);
 
-        System.out.println("usuario logueado: " + username);
+        if (is_admin == 1) {
+            System.out.println("administrador logueado: " + username);
+        } else {
+            System.out.println("usuario logueado: " + username);
+        }
 
         return "redirect:/dashboard";
 
     }
 
+    // Endpoint de la Dashboard / Menu principal
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session) {
 
@@ -52,11 +81,13 @@ public class AuthController {
 
     }
 
+    // Endpoint de los errores
     @GetMapping("/error")
     public String error() {
         return "error";
     }
 
+    // Endpoint del logout
     @GetMapping("/logout")
     public String logout(HttpSession session) {
 
