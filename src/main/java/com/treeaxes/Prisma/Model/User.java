@@ -12,6 +12,9 @@ public class User {
     @Column(name="id_user")
     private int id;
 
+    @Column(nullable = false)
+    private int isAdmin;
+
     @Column(unique = true,nullable = false)
     private String username;
 
@@ -34,4 +37,11 @@ public class User {
         this.username = username;
     }
 
+    public int getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(int isAdmin) {
+        this.isAdmin = isAdmin;
+    }
 }

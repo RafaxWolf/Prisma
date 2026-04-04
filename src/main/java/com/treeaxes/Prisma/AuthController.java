@@ -17,7 +17,7 @@ public class AuthController {
     private UserRep userRep;
 
     @PostMapping("/auth")
-    public String auth(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
+    public String auth(@RequestParam("username") String username, @RequestParam(value = "password") String password, HttpSession session) {
         System.out.println();
         System.out.println("[Debug] Password: " + password);
         if (!userRep.existsByUsername(username)) {
@@ -30,7 +30,10 @@ public class AuthController {
             System.out.println("usuario ya existe prosiga mi rey\n");
         }
 
+        String role = "";
+
         session.setAttribute("username", username);
+        session.setAttribute("user", role);
 
         System.out.println("usuario logueado: " + username);
 
