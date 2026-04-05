@@ -17,7 +17,7 @@ public class HomeController {
     public String index(HttpSession session) {
         if (session.getAttribute("username") != null) {
             session.invalidate();
-            System.out.println("Sesion cerrada por un error.");
+            System.out.println("Sesion cerrada para evitar bugs.");
         }
 
         return "index";
