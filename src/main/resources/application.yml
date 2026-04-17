@@ -1,0 +1,27 @@
+#spring.application.name=Prisma
+
+spring:
+  application:
+    name: Prisma
+
+
+  datasource:
+    url: jdbc:oracle:thin:${OracleDB_NAME}?TNS_ADMIN=${OracleDBPath}
+    username: ${OracleDBUser}
+    password: ${OracleDBPW}
+
+
+    driver-class-name: oracle.jdbc.OracleDriver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.OracleDialect
+    show-sql: true
+
+
+#  security:
+#    user:
+#      name: akomi
+#      password: hola123
